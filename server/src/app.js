@@ -14,6 +14,16 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Import des routes
+const authRoutes = require("./routes/authRoutes");
+const postsRoutes = require("./routes/postsRoutes");
+const usersRoutes = require("./routes/usersRoutes");
+
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postsRoutes);
+app.use("/api/users", usersRoutes);
+
 // Route de test
 app.get("/api/test", (req, res) => {
   res.json({
@@ -23,23 +33,11 @@ app.get("/api/test", (req, res) => {
   });
 });
 
-app.use((req, res) => {
-  res.status(404).json({
-    error: "Route not found",
-    path: req.path,
-    method: req.method,
-  });
-});
+const notFoundHandler = require("./middlewares/notFound");
+const errorHandler = require("./middlewares/errorHandler");
 
-// Error handler global
-app.use((err, req, res, next) => {
-  console.error("Error:", err.message);
-  console.error(err.stack);
+app.use(notFoundHandler);
 
-  res.status(err.status || 500).json({
-    error: "Internal server error",
-    timestamp: new Date().toISOString(),
-  });
-});
+app.use(errorHandler);
 
 module.exports = app;
