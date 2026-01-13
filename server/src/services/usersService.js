@@ -10,7 +10,7 @@ class UsersService {
         email: userData.email,
         username: userData.username,
         password: hashedPassword,
-        role: userData.role || "USER",
+        role: "USER",
       },
     });
   }

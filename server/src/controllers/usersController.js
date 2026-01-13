@@ -29,14 +29,6 @@ const usersController = {
 
   async getAll(req, res) {
     try {
-      if (!req.user) {
-        return res.status(401).json({ error: "Token required" });
-      }
-
-      if (req.user.role !== "ADMIN") {
-        return res.status(403).json({ error: "Admin only" });
-      }
-
       const users = await usersService.findAll();
 
       const safeUsers = users.map((user) => {
