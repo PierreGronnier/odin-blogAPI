@@ -21,6 +21,7 @@ model User {
   role      String    @default("USER")
   posts     Post[]
   comments  Comment[]  
+  lastLogoutAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }

@@ -1,4 +1,5 @@
 const authService = require("../services/authService");
+const prisma = require("../config/database");
 
 const authController = {
   async register(req, res) {
@@ -24,6 +25,27 @@ const authController = {
       });
     } catch (error) {
       res.status(401).json({ error: error.message });
+    }
+  },
+
+  async logout(req, res) {
+    try {
+      if (!req.user || !req.user.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      await prisma.user.update({
+        where: { id: req.user.userId },
+        data: { lastLogoutAt: new Date() },
+      });
+
+      res.json({
+        message: "Logout successful",
+        note: "All tokens issued before this moment are now invalid.",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+      res.status(500).json({ error: error.message });
     }
   },
 };

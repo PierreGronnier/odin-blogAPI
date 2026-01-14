@@ -10,10 +10,20 @@ const postsController = {
     }
   },
 
+  async getOne(req, res) {
+    try {
+      const post = await postsService.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   async create(req, res) {
     try {
-      console.log("Creating post for user:", req.user);
-
       const postData = {
         ...req.body,
         authorId: req.user.userId,
@@ -22,7 +32,107 @@ const postsController = {
       const newPost = await postsService.create(postData);
       res.status(201).json(newPost);
     } catch (error) {
-      console.error("Error creating post:", error);
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async update(req, res) {
+    try {
+      const post = await postsService.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+
+      if (post.authorId !== req.user.userId) {
+        return res
+          .status(403)
+          .json({ error: "You can only edit your own posts" });
+      }
+
+      const updatedPost = await postsService.update(req.params.id, req.body);
+      res.json(updatedPost);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      const post = await postsService.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+
+      if (post.authorId !== req.user.userId) {
+        return res
+          .status(403)
+          .json({ error: "You can only delete your own posts" });
+      }
+
+      await postsService.delete(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // Admin actions
+  async adminUpdate(req, res) {
+    try {
+      const updatedPost = await postsService.update(req.params.id, req.body);
+      res.json(updatedPost);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async adminDelete(req, res) {
+    try {
+      await postsService.delete(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async publish(req, res) {
+    try {
+      const post = await postsService.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+
+      const updatedPost = await postsService.update(req.params.id, {
+        published: true,
+        publishedAt: new Date(),
+      });
+
+      res.json({
+        message: "Post published successfully",
+        post: updatedPost,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async unpublish(req, res) {
+    try {
+      const post = await postsService.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+
+      const updatedPost = await postsService.update(req.params.id, {
+        published: false,
+        publishedAt: null,
+      });
+
+      res.json({
+        message: "Post unpublished successfully",
+        post: updatedPost,
+      });
+    } catch (error) {
       res.status(400).json({ error: error.message });
     }
   },
