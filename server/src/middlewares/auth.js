@@ -44,6 +44,43 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
+// Auth facultative (pour les commentaires)
+const authenticateTokenOptional = async (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    req.user = null;
+    return next();
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      select: { lastLogoutAt: true },
+    });
+
+    if (!user) {
+      req.user = null;
+      return next();
+    }
+
+    if (user.lastLogoutAt && decoded.iat * 1000 < user.lastLogoutAt.getTime()) {
+      req.user = null;
+      return next();
+    }
+
+    req.user = decoded;
+    next();
+  } catch (error) {
+    req.user = null;
+    next();
+  }
+};
+
 const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
     if (!req.user) {
@@ -60,4 +97,8 @@ const authorizeRoles = (...allowedRoles) => {
   };
 };
 
-module.exports = { authenticateToken, authorizeRoles };
+module.exports = {
+  authenticateToken,
+  authenticateTokenOptional,
+  authorizeRoles,
+};

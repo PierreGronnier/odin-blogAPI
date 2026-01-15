@@ -8,7 +8,6 @@ class PostsService {
           select: {
             id: true,
             username: true,
-            email: true,
           },
         },
       },
@@ -24,7 +23,6 @@ class PostsService {
           select: {
             id: true,
             username: true,
-            email: true,
           },
         },
       },

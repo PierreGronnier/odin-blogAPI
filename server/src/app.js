@@ -18,11 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require("./routes/authRoutes");
 const postsRoutes = require("./routes/postsRoutes");
 const usersRoutes = require("./routes/usersRoutes");
+const commentsRoutes = require("./routes/commentsRoutes");
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/comments", commentsRoutes);
 
 // Route de test
 app.get("/api/test", (req, res) => {
