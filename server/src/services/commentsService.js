@@ -1,32 +1,39 @@
 const prisma = require("../config/database");
 
 class CommentsService {
+  baseSelect = {
+    id: true,
+    content: true,
+    postId: true,
+    author: true,
+    approved: true,
+    userId: true,
+    createdAt: true,
+    updatedAt: true,
+    user: {
+      select: {
+        id: true,
+        username: true,
+      },
+    },
+  };
+
+  adminSelect = {
+    ...this.baseSelect,
+    email: true,
+    user: {
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    },
+  };
+
   async findAll() {
     return prisma.comment.findMany({
       where: { approved: true },
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-          },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-    });
-  }
-
-  async findAllAdmin() {
-    return prisma.comment.findMany({
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-            email: true,
-          },
-        },
-      },
+      select: this.baseSelect,
       orderBy: { createdAt: "desc" },
     });
   }
@@ -34,14 +41,14 @@ class CommentsService {
   async findById(id) {
     return prisma.comment.findUnique({
       where: { id },
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-          },
-        },
-      },
+      select: this.baseSelect,
+    });
+  }
+
+  async findAllAdmin() {
+    return prisma.comment.findMany({
+      select: this.adminSelect,
+      orderBy: { createdAt: "desc" },
     });
   }
 
@@ -78,21 +85,15 @@ class CommentsService {
 
     return prisma.comment.create({
       data: createData,
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-          },
-        },
-      },
+      select: this.baseSelect,
     });
   }
 
-  async update(id, updateData) {
+  async update(id, updateData, includeEmail = false) {
     return prisma.comment.update({
       where: { id },
       data: updateData,
+      select: includeEmail ? this.adminSelect : this.baseSelect,
     });
   }
 

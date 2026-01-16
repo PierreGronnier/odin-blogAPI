@@ -7,11 +7,10 @@ const {
   authorizeRoles,
 } = require("../middlewares/auth");
 const validate = require("../middlewares/validate");
-/*const {
+const {
   createCommentValidator,
   updateCommentValidator,
 } = require("../validators/commentsValidator");
- */
 
 router.get("/", commentsController.getAll);
 
@@ -20,7 +19,7 @@ router.get("/:id", commentsController.getOne);
 router.post(
   "/",
   authenticateTokenOptional,
-  /*createCommentValidator,*/
+  createCommentValidator,
   validate,
   commentsController.create
 );
@@ -28,7 +27,7 @@ router.post(
 router.put(
   "/:id",
   authenticateToken,
-  /*updateCommentValidator,*/
+  updateCommentValidator,
   validate,
   commentsController.update
 );
@@ -40,6 +39,13 @@ router.get(
   authenticateToken,
   authorizeRoles("ADMIN"),
   commentsController.getAllAdmin
+);
+
+router.put(
+  "/:id/admin/reject",
+  authenticateToken,
+  authorizeRoles("ADMIN"),
+  commentsController.reject
 );
 
 router.put(

@@ -37,20 +37,27 @@ const commentsController = {
         return res.status(404).json({ error: "Post not found" });
       }
 
+      let finalAuthor = author;
+      let finalEmail = email;
+      const userId = req.user ? req.user.userId : null;
+
+      if (userId) {
+        finalAuthor = undefined;
+        finalEmail = undefined;
+      } else {
+        if (!author) {
+          return res.status(400).json({
+            error: "Author is required for anonymous comments",
+          });
+        }
+      }
+
       const commentData = {
         content,
         postId,
-        author,
-        email,
+        author: finalAuthor,
+        email: finalEmail,
       };
-
-      const userId = req.user ? req.user.userId : null;
-
-      if (!userId && !author) {
-        return res.status(400).json({
-          error: "Author is required for anonymous comments",
-        });
-      }
 
       const newComment = await commentsService.create(commentData, userId);
 
@@ -127,6 +134,17 @@ const commentsController = {
     try {
       await commentsService.delete(req.params.id);
       res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async reject(req, res) {
+    try {
+      const updatedComment = await commentsService.update(req.params.id, {
+        approved: false,
+      });
+      res.json(updatedComment);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
