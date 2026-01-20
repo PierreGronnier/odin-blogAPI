@@ -1,0 +1,21 @@
+.home {
+  padding: 2rem 0;
+}
+
+.home-title {
+  font-size: 2.2rem;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 4rem;
+  color: var(--muted);
+}

@@ -1,0 +1,35 @@
+:root {
+  --primary: #db5461;
+  --primary-light: #ff7b8a;
+  --bg: #e3f2fd;
+  --text: #333333;
+  --accent: #686963;
+  --muted: #8aa29e;
+  --border: #ccd6d4;
+  --navbar-bg: #ff7b8a;
+  --footer-bg: #ff7b8a;
+  --card-bg: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding: 80px 2rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}

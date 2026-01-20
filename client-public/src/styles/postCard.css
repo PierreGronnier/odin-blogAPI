@@ -1,0 +1,32 @@
+.post-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.post-card:hover {
+  border-color: var(--primary);
+}
+
+.post-card h2 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.post-excerpt {
+  color: var(--muted);
+  margin: 1rem 0;
+}
+
+.post-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
