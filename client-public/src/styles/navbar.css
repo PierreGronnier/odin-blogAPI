@@ -10,19 +10,30 @@
   left: 0;
   right: 0;
   z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  color: white;
+  color: var(--white);
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.9;
 }
 
 .nav-links a {
-  color: white;
+  color: var(--white);
   margin-left: 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
 }
 
 .nav-links a:hover {
-  opacity: 0.9;
+  color: #ffe6e9;
+  border-bottom-color: var(--white);
 }

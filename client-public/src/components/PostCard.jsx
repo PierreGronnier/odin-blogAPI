@@ -4,6 +4,14 @@ import userIcon from "../assets/author.png";
 import calendarIcon from "../assets/calendar.png";
 
 function PostCard({ post }) {
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <Link to={`/posts/${post.id}`} className="post-card">
       <h2>{post.title}</h2>
@@ -12,20 +20,12 @@ function PostCard({ post }) {
 
       <div className="post-meta">
         <span>
-          <img
-            src={userIcon}
-            alt="Author"
-            style={{ width: "16px", marginRight: "5px" }}
-          />
+          <img src={userIcon} alt="Author" />
           {post.author.username}
         </span>
         <span>
-          <img
-            src={calendarIcon}
-            alt="Date"
-            style={{ width: "16px", marginRight: "5px" }}
-          />
-          {new Date(post.createdAt).toLocaleDateString("en-US")}
+          <img src={calendarIcon} alt="Date" />
+          {formatDate(post.createdAt)}
         </span>
       </div>
     </Link>

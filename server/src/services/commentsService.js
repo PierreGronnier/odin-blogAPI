@@ -45,6 +45,17 @@ class CommentsService {
     });
   }
 
+  async findAllByPostId(postId) {
+    return prisma.comment.findMany({
+      where: {
+        postId: postId,
+        approved: true,
+      },
+      select: this.baseSelect,
+      orderBy: { createdAt: "desc" },
+    });
+  }
+
   async findAllAdmin() {
     return prisma.comment.findMany({
       select: this.adminSelect,

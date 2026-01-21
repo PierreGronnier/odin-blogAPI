@@ -9,16 +9,32 @@
   --navbar-bg: #ff7b8a;
   --footer-bg: #ff7b8a;
   --card-bg: #ffffff;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  margin: 0;
   font-family: system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
@@ -32,4 +48,5 @@ main {
 a {
   color: var(--primary);
   text-decoration: none;
+  transition: all 0.2s ease;
 }

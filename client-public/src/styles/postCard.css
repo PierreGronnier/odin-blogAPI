@@ -1,32 +1,55 @@
 .post-card {
   background: var(--card-bg);
   padding: 1.5rem;
+  padding-bottom: 0;
   border-radius: 8px;
   color: var(--text);
   border: 1px solid var(--border);
-  display: block;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-height: 200px;
 }
 
 .post-card:hover {
   border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(219, 84, 97, 0.15);
 }
 
 .post-card h2 {
   color: var(--accent);
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .post-excerpt {
   color: var(--muted);
   margin: 1rem 0;
+  line-height: 1.6;
 }
 
 .post-meta {
   display: flex;
+  justify-content: center;
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
-  color: var(--muted);
+  color: var(--text);
   font-size: 0.9rem;
+}
+
+.post-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.post-meta img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(36%) sepia(58%) saturate(1291%)
+    hue-rotate(322deg) brightness(96%) contrast(88%);
 }

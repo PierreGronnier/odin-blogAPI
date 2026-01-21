@@ -5,8 +5,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
-        <span style={{ color: "#DB5461" }}>Pierre</span>
-        <span style={{ color: "#686963", marginLeft: "0.3rem" }}>Gronnier</span>
+        Pierre Gronnier
       </Link>
 
       <div className="nav-links">

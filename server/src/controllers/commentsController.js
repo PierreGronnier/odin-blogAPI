@@ -3,7 +3,13 @@ const commentsService = require("../services/commentsService");
 const commentsController = {
   async getAll(req, res) {
     try {
-      const comments = await commentsService.findAll();
+      const { postId } = req.query;
+
+      if (!postId) {
+        return res.status(400).json({ error: "postId is required" });
+      }
+
+      const comments = await commentsService.findAllByPostId(postId);
       res.json(comments);
     } catch (error) {
       res.status(500).json({ error: error.message });

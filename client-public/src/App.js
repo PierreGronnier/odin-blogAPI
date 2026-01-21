@@ -6,11 +6,15 @@ import AppRouter from "./routes/AppRouter";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <main>
-        <AppRouter />
-      </main>
-      <Footer />
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <Navbar />
+        <main style={{ flex: 1 }}>
+          <AppRouter />
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

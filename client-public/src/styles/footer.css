@@ -2,6 +2,6 @@
   background: var(--footer-bg);
   padding: 1.5rem;
   text-align: center;
-  color: white;
+  color: var(--white);
   width: 100%;
 }
