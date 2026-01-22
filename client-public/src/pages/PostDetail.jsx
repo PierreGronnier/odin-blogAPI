@@ -22,6 +22,16 @@ function PostDetail() {
     return date.toLocaleDateString("fr-FR");
   };
 
+  /* // TODO: Implémenter ces fonctions plus tard
+  const handleDelete = async (commentId) => {
+    console.log("Delete", commentId);
+  };
+
+  const handleEdit = async (commentId) => {
+    console.log("Edit", commentId);
+  };
+  */
+
   useEffect(() => {
     setLoading(true);
     setNotFound(false);
@@ -64,17 +74,38 @@ function PostDetail() {
 
       <section className="comments">
         <h2>Comments ({comments.length})</h2>
-
         {comments.length === 0 && (
           <p>No comments yet. Be the first to comment!</p>
         )}
 
-        {comments.map((c) => (
-          <div key={c.id} className="comment">
-            <strong>{c.author || "Anonymous"}</strong>
-            <p>{he.decode(c.content)}</p>
-          </div>
-        ))}
+        {comments.map((c) => {
+          const isAuthor =
+            localStorage.getItem("user_name") ===
+            (c.author?.username || c.author);
+
+          return (
+            <div key={c.id} className="comment">
+              <div className="comment-header">
+                <strong>{c.author?.username || c.author || "Anonymous"}</strong>
+
+                {/* Partie Edit/Delete mise en commentaire pour éviter les erreurs */}
+                {/* {isAuthor && (
+                  <div className="comment-actions">
+                    <button onClick={() => handleEdit(c.id)}>Edit</button>
+                    <button
+                      onClick={() => handleDelete(c.id)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )} 
+                */}
+              </div>
+              <p>{he.decode(c.content)}</p>
+            </div>
+          );
+        })}
 
         <CommentForm
           postId={post.id}
@@ -82,7 +113,6 @@ function PostDetail() {
             setComments((prev) => [newComment, ...prev])
           }
         />
-
         <div className="back-link-container">
           <Link to="/" className="back-link">
             <img src={arrowIcon} alt="Back" />

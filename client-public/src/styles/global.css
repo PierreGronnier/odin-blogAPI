@@ -3,13 +3,14 @@
   --primary-light: #ff7b8a;
   --bg: #e3f2fd;
   --text: #333333;
-  --accent: #686963;
+  --accent: #a82835;
   --muted: #8aa29e;
   --border: #ccd6d4;
   --navbar-bg: #ff7b8a;
   --footer-bg: #ff7b8a;
   --card-bg: #ffffff;
   --white: #ffffff;
+  --error: #d32f2f;
 }
 
 * {
@@ -29,17 +30,21 @@ body {
   color: var(--text);
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  flex: 1;
 }
 
 main {
   flex: 1;
-  padding: 80px 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px);
+  padding: 80px 1.5rem 2rem;
   max-width: 900px;
   margin: 0 auto;
   width: 100%;
