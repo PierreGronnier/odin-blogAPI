@@ -16,3 +16,19 @@ export function createComment(postId, data) {
 export function getCommentsByPostId(postId) {
   return apiFetch(`/comments?postId=${postId}`);
 }
+
+export function deleteComment(commentId) {
+  return apiFetch(`/comments/${commentId}`, {
+    method: "DELETE",
+  });
+}
+
+export function updateComment(commentId, data) {
+  return apiFetch(`/comments/${commentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+}

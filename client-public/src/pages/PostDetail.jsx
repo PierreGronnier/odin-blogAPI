@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import he from "he";
 import { getPostById } from "../api/posts";
-import { getCommentsByPostId } from "../api/comments";
+import {
+  getCommentsByPostId,
+  deleteComment,
+  updateComment,
+} from "../api/comments";
 import ErrorMessage from "../components/ErrorMessage";
 import CommentForm from "../components/CommentForm";
+import CommentItem from "../components/CommentItem";
 import "../styles/postDetail.css";
 import userIcon from "../assets/author.png";
 import calendarIcon from "../assets/calendar.png";
 import arrowIcon from "../assets/arrow-left.png";
+import Swal from "sweetalert2";
 
 function PostDetail() {
   const { id } = useParams();
@@ -22,20 +27,51 @@ function PostDetail() {
     return date.toLocaleDateString("fr-FR");
   };
 
-  /* // TODO: Implémenter ces fonctions plus tard
-  const handleDelete = async (commentId) => {
-    console.log("Delete", commentId);
+  const handleDelete = (commentId) => {
+    Swal.fire({
+      title: "Delete comment?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#db5461",
+      cancelButtonColor: "#8aa29e",
+      confirmButtonText: "Yes, delete it",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteComment(commentId);
+          setComments((prev) => prev.filter((c) => c.id !== commentId));
+          Swal.fire({
+            title: "Deleted!",
+            icon: "success",
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        } catch (err) {
+          console.error("Erreur suppression:", err);
+          setComments((prev) => prev.filter((c) => c.id !== commentId));
+        }
+      }
+    });
   };
 
-  const handleEdit = async (commentId) => {
-    console.log("Edit", commentId);
+  const handleUpdate = async (commentId, newContent) => {
+    try {
+      await updateComment(commentId, { content: newContent });
+      setComments((prev) =>
+        prev.map((c) =>
+          c.id === commentId ? { ...c, content: newContent } : c,
+        ),
+      );
+    } catch (err) {
+      console.error("Erreur modification:", err);
+      Swal.fire("Error", "Could not update comment", "error");
+    }
   };
-  */
 
   useEffect(() => {
     setLoading(true);
-    setNotFound(false);
-
     Promise.all([getPostById(id), getCommentsByPostId(id)])
       .then(([postData, commentsData]) => {
         setPost(postData);
@@ -61,12 +97,10 @@ function PostDetail() {
 
       <div className="post-meta">
         <span>
-          <img src={userIcon} alt="Author" />
-          by {post.author.username}
+          <img src={userIcon} alt="Author" /> by {post.author.username}
         </span>
         <span>
-          <img src={calendarIcon} alt="Date" />
-          {formatDate(post.createdAt)}
+          <img src={calendarIcon} alt="Date" /> {formatDate(post.createdAt)}
         </span>
       </div>
 
@@ -74,38 +108,17 @@ function PostDetail() {
 
       <section className="comments">
         <h2>Comments ({comments.length})</h2>
-        {comments.length === 0 && (
-          <p>No comments yet. Be the first to comment!</p>
-        )}
 
-        {comments.map((c) => {
-          const isAuthor =
-            localStorage.getItem("user_name") ===
-            (c.author?.username || c.author);
+        {comments.length === 0 && <p>No comments yet.</p>}
 
-          return (
-            <div key={c.id} className="comment">
-              <div className="comment-header">
-                <strong>{c.author?.username || c.author || "Anonymous"}</strong>
-
-                {/* Partie Edit/Delete mise en commentaire pour éviter les erreurs */}
-                {/* {isAuthor && (
-                  <div className="comment-actions">
-                    <button onClick={() => handleEdit(c.id)}>Edit</button>
-                    <button
-                      onClick={() => handleDelete(c.id)}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )} 
-                */}
-              </div>
-              <p>{he.decode(c.content)}</p>
-            </div>
-          );
-        })}
+        {comments.map((c) => (
+          <CommentItem
+            key={c.id}
+            comment={c}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+          />
+        ))}
 
         <CommentForm
           postId={post.id}
@@ -113,10 +126,10 @@ function PostDetail() {
             setComments((prev) => [newComment, ...prev])
           }
         />
+
         <div className="back-link-container">
           <Link to="/" className="back-link">
-            <img src={arrowIcon} alt="Back" />
-            Back to blog
+            <img src={arrowIcon} alt="Back" /> Back to blog
           </Link>
         </div>
       </section>

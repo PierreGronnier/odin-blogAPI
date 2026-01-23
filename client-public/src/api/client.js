@@ -21,12 +21,10 @@ export async function apiFetch(endpoint, options = {}) {
 
   if (res.status === 401) {
     localStorage.removeItem("jwt_token");
-
     if (!window.location.pathname.includes("/login")) {
       window.location.href = "/login";
       return;
     }
-
     const errorText = await res.text();
     throw new Error(errorText || "Invalid credentials");
   }
@@ -36,5 +34,14 @@ export async function apiFetch(endpoint, options = {}) {
     throw new Error(text || "An error has occurred");
   }
 
-  return res.json();
+  if (res.status === 204) {
+    return null;
+  }
+
+  const contentType = res.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    return res.json();
+  }
+
+  return res.text();
 }

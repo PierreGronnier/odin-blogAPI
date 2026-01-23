@@ -3,7 +3,7 @@ const postsService = require("../services/postsService");
 const postsController = {
   async getAll(req, res) {
     try {
-      const posts = await postsService.findAll();
+      const posts = await postsService.findPublished();
       res.json(posts);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -15,6 +15,11 @@ const postsController = {
       const post = await postsService.findById(req.params.id);
       if (!post) {
         return res.status(404).json({ error: "Post not found" });
+      }
+      if (!post.published) {
+        return res
+          .status(403)
+          .json({ error: "This post is not yet published" });
       }
       res.json(post);
     } catch (error) {
@@ -77,6 +82,15 @@ const postsController = {
   },
 
   // Admin actions
+  async getAllForAdmin(req, res) {
+    try {
+      const posts = await postsService.findAll();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   async adminUpdate(req, res) {
     try {
       const updatedPost = await postsService.update(req.params.id, req.body);
