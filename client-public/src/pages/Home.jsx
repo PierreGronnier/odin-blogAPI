@@ -18,7 +18,7 @@ function Home() {
 
   return (
     <div className="home">
-      <h1 className="home-title">Blog</h1>
+      <h1 className="home-title">Blog Posts</h1>
 
       {posts.length === 0 && <p>No posts</p>}
 
