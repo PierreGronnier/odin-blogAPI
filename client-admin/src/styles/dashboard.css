@@ -5,55 +5,6 @@
   background-color: var(--bg);
 }
 
-/* Header */
-.dashboard-header {
-  background: var(--navbar-bg);
-  color: var(--white);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: var(--shadow);
-}
-
-.dashboard-header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.user-section {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.welcome-message {
-  color: var(--gray-300);
-  font-size: 0.95rem;
-}
-
-.welcome-message strong {
-  color: var(--white);
-  text-transform: capitalize;
-}
-
-.logout-button {
-  background: transparent;
-  color: var(--white);
-  border: 1px solid var(--gray-500);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.logout-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--white);
-}
-
 /* Main content */
 .dashboard-main {
   flex: 1;

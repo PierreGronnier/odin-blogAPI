@@ -1,18 +1,16 @@
-// src/App.jsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { isAdmin } from "./utils/auth";
+import { isAdmin } from "./api/auth";
 import Login from "./pages/Login";
+import AdminLayout from "./layout/AdminLayout";
 import Dashboard from "./pages/Dashboard";
+import Posts from "./pages/Posts";
+import Comments from "./pages/Comments";
 import "./styles/global.css";
 
-// Composant pour protéger les routes admin
 function AdminRoute({ children }) {
-  // Vérifie si l'utilisateur est admin
   if (!isAdmin()) {
-    // Redirige vers la page de login
     return <Navigate to="/login" />;
   }
-
   return children;
 }
 
@@ -20,20 +18,23 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Route publique */}
         <Route path="/login" element={<Login />} />
 
-        {/* Routes protégées (admin seulement) */}
         <Route
           path="/"
           element={
             <AdminRoute>
-              <Dashboard />
+              <AdminLayout />
             </AdminRoute>
           }
-        />
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="posts" element={<Posts />} />
+          <Route path="posts/create" element={<Posts />} />
+          <Route path="posts/edit/:id" element={<Posts />} />
+          <Route path="comments" element={<Comments />} />
+        </Route>
 
-        {/* Redirection par défaut */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

@@ -11,7 +11,7 @@ function AppRouter() {
       <Route path="/posts/:id" element={<PostDetail />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="*" element={<p>404 – Page introuvable</p>} />
+      <Route path="*" element={<p>404 – Not found</p>} />
     </Routes>
   );
 }

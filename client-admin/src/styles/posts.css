@@ -1,0 +1,226 @@
+.posts-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: var(--text);
+}
+
+/* ===== BOUTONS ===== */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  min-width: 70px;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  border: 1px solid var(--primary-dark);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: #4a5568;
+  color: white;
+  border: 1px solid #2d3748;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #2d3748;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+  border: 1px solid #c53030;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #c53030;
+}
+
+.btn-edit {
+  background-color: #4299e1;
+  color: white;
+  border: 1px solid #3182ce;
+}
+
+.btn-edit:hover:not(:disabled) {
+  background-color: #3182ce;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  min-width: 60px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== TABLE STYLES ===== */
+.posts-table-container {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.posts-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.posts-table th {
+  background-color: var(--gray-100);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.posts-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.posts-table tr:last-child td {
+  border-bottom: none;
+}
+
+.posts-table tr:hover {
+  background-color: rgba(72, 187, 120, 0.05);
+}
+
+.post-title-cell strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.post-excerpt {
+  color: var(--text-light);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-badge.published {
+  background-color: #c6f6d5;
+  color: #22543d;
+  border: 1px solid #9ae6b4;
+}
+
+.status-badge.draft {
+  background-color: #fed7d7;
+  color: #742a2a;
+  border: 1px solid #fc8181;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 2px dashed var(--border);
+  color: var(--text-light);
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* ===== LOADING & ERROR ===== */
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+}
+
+.loading {
+  color: var(--primary);
+}
+
+.error {
+  color: var(--danger);
+  background: #fed7d7;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1rem;
+  border: 1px solid #fc8181;
+}

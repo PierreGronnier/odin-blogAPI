@@ -46,14 +46,6 @@ a:hover {
   text-decoration: underline;
 }
 
-button {
-  cursor: pointer;
-  font-family: inherit;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 0.5rem 1rem;
-}
-
 input,
 textarea,
 select {

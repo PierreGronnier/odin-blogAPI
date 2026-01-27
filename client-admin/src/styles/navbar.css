@@ -1,0 +1,63 @@
+.dashboard-header {
+  background: var(--navbar-bg);
+  color: var(--white);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: flex;
+}
+
+.nav-links a {
+  color: var(--gray-300);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-links a.active {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.welcome-message {
+  color: var(--gray-300);
+  font-size: 0.95rem;
+}
+
+.welcome-message strong {
+  color: var(--white);
+  text-transform: capitalize;
+}

@@ -1,0 +1,39 @@
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-published {
+  background-color: #c6f6d5;
+  color: #22543d;
+  border: 1px solid #9ae6b4;
+}
+
+.status-draft {
+  background-color: #fed7d7;
+  color: #742a2a;
+  border: 1px solid #fc8181;
+}
+
+.status-pending {
+  background-color: #fefcbf;
+  color: #744210;
+  border: 1px solid #f6e05e;
+}
+
+.status-approved {
+  background-color: #bee3f8;
+  color: #2c5282;
+  border: 1px solid #90cdf4;
+}
+
+.status-rejected {
+  background-color: #e9d8fd;
+  color: #553c9a;
+  border: 1px solid #d6bcfa;
+}
