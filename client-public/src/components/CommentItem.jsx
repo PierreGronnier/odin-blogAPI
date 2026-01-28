@@ -1,5 +1,4 @@
 import { useState } from "react";
-import he from "he";
 import editIcon from "../assets/edit.png";
 import deleteIcon from "../assets/delete.png";
 
@@ -57,7 +56,7 @@ function CommentItem({ comment, onDelete, onUpdate }) {
           </div>
         </div>
       ) : (
-        <p>{he.decode(comment.content)}</p>
+        <p>{comment.content}</p>
       )}
     </div>
   );

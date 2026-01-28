@@ -5,6 +5,7 @@ import AdminLayout from "./layout/AdminLayout";
 import Dashboard from "./pages/Dashboard";
 import Posts from "./pages/Posts";
 import Comments from "./pages/Comments";
+import PostForm from "./pages/PostForm";
 import "./styles/global.css";
 
 function AdminRoute({ children }) {
@@ -30,8 +31,8 @@ function App() {
         >
           <Route index element={<Dashboard />} />
           <Route path="posts" element={<Posts />} />
-          <Route path="posts/create" element={<Posts />} />
-          <Route path="posts/edit/:id" element={<Posts />} />
+          <Route path="posts/create" element={<PostForm />} />
+          <Route path="posts/edit/:id" element={<PostForm />} />
           <Route path="comments" element={<Comments />} />
         </Route>
 

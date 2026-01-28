@@ -91,6 +91,18 @@ const postsController = {
     }
   },
 
+  async getOneForAdmin(req, res) {
+    try {
+      const post = await postsService.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   async adminUpdate(req, res) {
     try {
       const updatedPost = await postsService.update(req.params.id, req.body);

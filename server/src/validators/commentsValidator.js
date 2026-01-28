@@ -6,8 +6,7 @@ const createCommentValidator = [
     .notEmpty()
     .withMessage("Content is required")
     .isLength({ min: 1, max: 1000 })
-    .withMessage("Content must be between 1 and 1000 characters")
-    .escape(),
+    .withMessage("Content must be between 1 and 1000 characters"),
 
   body("postId")
     .trim()
@@ -20,8 +19,7 @@ const createCommentValidator = [
     .optional()
     .trim()
     .isLength({ min: 1, max: 50 })
-    .withMessage("Author name must be between 1 and 50 characters")
-    .escape(),
+    .withMessage("Author name must be between 1 and 50 characters"),
 
   body("email")
     .optional()
@@ -37,8 +35,7 @@ const updateCommentValidator = [
     .notEmpty()
     .withMessage("Content is required")
     .isLength({ min: 1, max: 1000 })
-    .withMessage("Content must be between 1 and 1000 characters")
-    .escape(),
+    .withMessage("Content must be between 1 and 1000 characters"),
 
   body("postId")
     .optional()

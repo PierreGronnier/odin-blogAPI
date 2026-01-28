@@ -5,7 +5,7 @@ export async function getAllPosts() {
 }
 
 export async function getPost(id) {
-  return apiFetch(`/posts/${id}`);
+  return apiFetch(`/posts/admin/${id}`);
 }
 
 export async function createPost(data) {
@@ -37,5 +37,12 @@ export async function publishPost(id) {
 export async function unpublishPost(id) {
   return apiFetch(`/posts/${id}/unpublish`, {
     method: "PUT",
+  });
+}
+
+export async function adminUpdatePost(id, data) {
+  return apiFetch(`/posts/${id}/admin`, {
+    method: "PUT",
+    body: JSON.stringify(data),
   });
 }

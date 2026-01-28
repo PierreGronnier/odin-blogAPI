@@ -39,6 +39,13 @@ router.get(
   postsController.getAllForAdmin,
 );
 
+router.get(
+  "/admin/:id",
+  authenticateToken,
+  authorizeRoles("ADMIN"),
+  postsController.getOneForAdmin,
+);
+
 // Admin only routes
 router.put(
   "/:id/admin",
