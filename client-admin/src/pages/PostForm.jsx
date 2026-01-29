@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPost, updatePost, getPost } from "../api/posts";
 import { isAdmin } from "../api/auth";
@@ -24,13 +24,7 @@ export default function PostForm() {
     content: "",
   });
 
-  useEffect(() => {
-    if (isEditMode) {
-      loadPost();
-    }
-  }, [id]);
-
-  async function loadPost() {
+  const loadPost = useCallback(async () => {
     try {
       setFormLoading(true);
       const post = await getPost(id);
@@ -47,7 +41,13 @@ export default function PostForm() {
     } finally {
       setFormLoading(false);
     }
-  }
+  }, [id, navigate]);
+
+  useEffect(() => {
+    if (isEditMode && id) {
+      loadPost();
+    }
+  }, [isEditMode, id, loadPost]);
 
   const validateFrontend = () => {
     const newErrors = { title: "", content: "" };
@@ -142,12 +142,15 @@ export default function PostForm() {
     }
   }
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     if (formData.title || formData.content) {
-      const confirmCancel = window.confirm(
+      const isConfirmed = await showConfirm(
+        "Unsaved Changes",
         "You have unsaved changes. Are you sure you want to cancel?",
+        "Yes, cancel",
+        "Continue editing",
       );
-      if (!confirmCancel) return;
+      if (!isConfirmed) return;
     }
     navigate("/posts");
   };
