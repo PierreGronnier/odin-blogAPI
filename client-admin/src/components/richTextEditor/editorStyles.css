@@ -1,0 +1,193 @@
+/* Style pour l'éditeur TinyMCE */
+.tox-tinymce {
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--border) !important;
+  transition: all 0.2s ease !important;
+}
+
+.tox-tinymce:focus-within {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.1) !important;
+}
+
+/* Quand l'éditeur est en erreur */
+.input-error + .tox-tinymce,
+.tox-tinymce.input-error {
+  border-color: var(--danger) !important;
+  background-color: #fff5f5 !important;
+}
+
+.tox-tinymce.tox-tinymce--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Onglets Edit/Preview */
+.editor-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+  background: white;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  overflow: hidden;
+}
+
+.tab-btn {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  flex: 1;
+  text-align: center;
+}
+
+.tab-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: rgba(72, 187, 120, 0.05);
+  font-weight: 600;
+}
+
+.tab-btn:hover:not(.active):not(:disabled) {
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.tab-btn img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.tab-btn.active img {
+  filter: brightness(0) saturate(100%) invert(48%) sepia(68%) saturate(404%)
+    hue-rotate(93deg) brightness(92%) contrast(90%);
+}
+
+.tab-btn:disabled img {
+  opacity: 0.6;
+}
+
+/* Prévisualisation */
+.preview-content {
+  min-height: 500px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: white;
+  overflow-y: auto;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.preview-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem auto;
+  display: block;
+}
+
+.preview-content h1 {
+  font-size: 2.2em;
+  margin: 1.8em 0 0.8em;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.preview-content h2 {
+  font-size: 1.8em;
+  margin: 1.6em 0 0.7em;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.preview-content h3 {
+  font-size: 1.5em;
+  margin: 1.4em 0 0.6em;
+  font-weight: 600;
+}
+
+.preview-content p {
+  margin: 1.2em 0;
+}
+
+.preview-content ul,
+.preview-content ol {
+  padding-left: 2em;
+  margin: 1.2em 0;
+}
+
+.preview-content li {
+  margin: 0.5em 0;
+}
+
+.preview-content blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1.5em;
+  margin: 2em 0;
+  font-style: italic;
+  color: #555;
+  font-size: 1.1em;
+}
+
+.preview-content pre {
+  background: #f8f9fa;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font-family: "Courier New", monospace;
+}
+
+.preview-content code {
+  background: #f1f3f5;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+.preview-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.preview-content table th {
+  background: var(--primary);
+  color: white;
+  padding: 0.8em;
+  text-align: left;
+  font-weight: 600;
+}
+
+.preview-content table td {
+  padding: 0.8em;
+  border: 1px solid #e2e8f0;
+}
+
+.preview-content a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.preview-content a:hover {
+  color: var(--primary-dark);
+}
+
+textarea[aria-hidden="true"] {
+  display: none;
+}

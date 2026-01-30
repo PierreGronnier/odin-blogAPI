@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const sanitizeHtmlMiddleware = require("./middlewares/sanitizeHtml");
 require("dotenv").config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(sanitizeHtmlMiddleware);
 
 // Import des routes
 const authRoutes = require("./routes/authRoutes");

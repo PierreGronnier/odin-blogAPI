@@ -12,11 +12,28 @@ function PostCard({ post }) {
     return `${day}/${month}/${year}`;
   };
 
+  const getCleanExcerpt = (html, maxLength = 150) => {
+    if (!html) return "";
+
+    const textWithoutTags = html.replace(/<[^>]*>/g, "");
+
+    const cleanText = textWithoutTags.replace(/\s+/g, " ").trim();
+
+    if (cleanText.length <= maxLength) return cleanText;
+
+    const truncated = cleanText.substring(0, maxLength);
+    const lastSpace = truncated.lastIndexOf(" ");
+
+    return lastSpace > 0
+      ? truncated.substring(0, lastSpace) + "..."
+      : truncated + "...";
+  };
+
   return (
     <Link to={`/posts/${post.id}`} className="post-card">
       <h2>{post.title}</h2>
 
-      <p className="post-excerpt">{post.content.slice(0, 150)}...</p>
+      <p className="post-excerpt">{getCleanExcerpt(post.content)}</p>
 
       <div className="post-meta">
         <span>

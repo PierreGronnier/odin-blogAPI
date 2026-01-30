@@ -104,7 +104,10 @@ function PostDetail() {
         </span>
       </div>
 
-      <article className="post-content">{post.content}</article>
+      <article
+        className="post-content rich-text-content"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
 
       <section className="comments">
         <h2>Comments ({comments.length})</h2>

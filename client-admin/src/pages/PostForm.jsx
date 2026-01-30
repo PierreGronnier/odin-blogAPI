@@ -1,15 +1,19 @@
+// client-admin/src/pages/PostForm.jsx
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPost, updatePost, getPost } from "../api/posts";
 import { isAdmin } from "../api/auth";
 import { showSuccess, showError, showConfirm } from "../utils/confirm";
 import Button from "../components/button/Button";
+import RichTextEditor from "../components/richTextEditor/RichTextEditor";
+import TabSwitcher from "../components/richTextEditor/TabSwitcher";
 import "../styles/postForm.css";
 
 export default function PostForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = !!id && id !== "create";
+  const [activeTab, setActiveTab] = useState("edit");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -19,10 +23,7 @@ export default function PostForm() {
 
   const [loading, setLoading] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState({
-    title: "",
-    content: "",
-  });
+  const [fieldErrors, setFieldErrors] = useState({ title: "", content: "" });
 
   const loadPost = useCallback(async () => {
     try {
@@ -61,11 +62,13 @@ export default function PostForm() {
       isValid = false;
     }
 
-    if (!formData.content.trim()) {
+    const textWithoutHtml = formData.content.replace(/<[^>]*>/g, "").trim();
+    if (!textWithoutHtml) {
       newErrors.content = "Content is required";
       isValid = false;
-    } else if (formData.content.length < 10) {
-      newErrors.content = "Content must be at least 10 characters";
+    } else if (textWithoutHtml.length < 10) {
+      newErrors.content =
+        "Content must be at least 10 characters (without HTML formatting)";
       isValid = false;
     }
 
@@ -82,6 +85,17 @@ export default function PostForm() {
 
     if (fieldErrors[name]) {
       setFieldErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleEditorChange = (content) => {
+    setFormData((prev) => ({
+      ...prev,
+      content: content,
+    }));
+
+    if (fieldErrors.content) {
+      setFieldErrors((prev) => ({ ...prev, content: "" }));
     }
   };
 
@@ -173,7 +187,6 @@ export default function PostForm() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/* Title Field */}
         <div className="form-group">
           <label htmlFor="title">Title *</label>
           <input
@@ -194,31 +207,44 @@ export default function PostForm() {
           </div>
         </div>
 
-        {/* Content Field */}
         <div className="form-group">
           <label htmlFor="content">Content *</label>
-          <textarea
-            id="content"
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            placeholder="Write your post content..."
-            rows={12}
+
+          <TabSwitcher
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
             disabled={loading || formLoading}
-            className={fieldErrors.content ? "input-error" : ""}
           />
+
+          {activeTab === "edit" ? (
+            <RichTextEditor
+              value={formData.content}
+              onChange={handleEditorChange}
+              disabled={loading || formLoading}
+              error={!!fieldErrors.content}
+              placeholder="Write your amazing blog post here..."
+            />
+          ) : (
+            <div
+              className="preview-content"
+              dangerouslySetInnerHTML={{ __html: formData.content }}
+            />
+          )}
+
           {fieldErrors.content && (
             <div className="field-error">{fieldErrors.content}</div>
           )}
           <div className="char-info">
             <div className="char-count">
-              {formData.content.length} characters
+              {formData.content.replace(/<[^>]*>/g, "").length} characters (text
+              only)
             </div>
-            <div className="char-requirement">Minimum: 10 characters</div>
+            <div className="char-requirement">
+              Minimum: 10 characters (without HTML)
+            </div>
           </div>
         </div>
 
-        {/* Published Field */}
         <div className="form-group checkbox-group">
           <label>
             <input
@@ -237,7 +263,6 @@ export default function PostForm() {
           </small>
         </div>
 
-        {/* Form Actions */}
         <div className="form-actions">
           <Button
             type="button"
@@ -247,7 +272,6 @@ export default function PostForm() {
           >
             Cancel
           </Button>
-
           <Button
             type="submit"
             variant="primary"

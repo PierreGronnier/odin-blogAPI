@@ -145,7 +145,7 @@ export default function Dashboard() {
           </p>
           <div className="card-actions">
             <Button
-              variant="primary"
+              variant="secondary"
               size="small"
               onClick={(e) => {
                 e.stopPropagation();
@@ -153,16 +153,6 @@ export default function Dashboard() {
               }}
             >
               View All
-            </Button>
-            <Button
-              variant="secondary"
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate("/posts/create");
-              }}
-            >
-              Create New
             </Button>
           </div>
         </div>
@@ -200,7 +190,7 @@ export default function Dashboard() {
           <p>Start writing a new blog post</p>
           <div className="card-actions">
             <Button
-              variant="primary"
+              variant="edit"
               size="small"
               onClick={(e) => {
                 e.stopPropagation();
