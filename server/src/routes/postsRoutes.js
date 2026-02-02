@@ -12,12 +12,13 @@ const {
 router.get("/", postsController.getAll);
 router.get("/:id", postsController.getOne);
 
-// Protected routes (authenticated users only)
+// Route pour le 2ème front (l'interface de gestion)
 router.post(
   "/",
   authenticateToken,
   createPostValidator,
   validate,
+  authorizeRoles("ADMIN"),
   postsController.create,
 );
 
@@ -31,7 +32,6 @@ router.put(
 
 router.delete("/:id", authenticateToken, postsController.delete);
 
-// Route pour le 2ème front (l'interface de gestion)
 router.get(
   "/admin/list",
   authenticateToken,
